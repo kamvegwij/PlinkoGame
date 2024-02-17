@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plinko</title>
+    <script src = "js/pixi.min.js"></script>
+
+   <script>
+    let app;
+
+    function set_player(pl, pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
+    {
+        pl.anchor.set(pivot)
+        pl.width = w;
+        pl.height = h;
+
+        //move player to center of screen
+        pl.x = app_w/2;
+        pl.y = app_h/2;
+    }
+
+    function set_box(w, h, app_w, app_h, world)
+    {
+        const box = PIXI.Sprite.from();
+
+        box.width = w;
+        box.height = h;
+        box.x = app_w/2;
+        box.y = app_h/2;
+        
+        world.stage.addChild(box);
+
+    }
+    window.onload = function()
+    {
+        app = new PIXI.Application(
+            {
+                width: 800,
+                height: 600,
+                backgroundColor: 0xAAAAAA
+            }
+        );
+        document.body.appendChild(app.view);
+
+        const player = PIXI.Sprite.from("/images/player_ball.png");
+        set_player(player, 0.5, 60, 60, app.view.width, app.view.height);
+
+        //place the new player in the stage:
+        app.stage.addChild(player);
+
+        app.ticker.add((delta) =>
+        {
+            player.rotation += 0.1 * delta;
+           // player.x -= 1 * delta;
+        });
+    }
+   </script>
+
+</head>
+<body>
+</body>
+</html>
