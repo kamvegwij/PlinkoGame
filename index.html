@@ -7,12 +7,27 @@
     <script src = "js/pixi.min.js"></script>
 
    <script>
+    
+
+    class WorldItems
+    {
+        constructor(w, h, app_w, app_h, app_obj)
+        {
+            this.w = w;
+            this.h = h;
+            this.app_h = app_w;
+            this.app_w = app_h;
+            this.app = app_obj;
+        }
+        
+    }
+
     let app;
     let box;
     let player;
     let start_p;
     let pins;
-    
+
     function set_player(pl, pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
     {
         pl.anchor.set(pivot)
@@ -26,7 +41,7 @@
         pl.vy = 0;
     }
 
-    function set_box(w, h, app_w, app_h, world)
+    function set_bucket(w, h, app_w, app_h, world)
     {
         box = PIXI.Sprite.from("images/collect_box.png");
 
@@ -65,9 +80,50 @@
         world.stage.addChild(pins);
     }
 
+    function change_bucket_text(stemp)
+    {//function to change bucket score text
+        const b_style = new PIXI.TextStyle({
+            fontSize: 20
+        });
+
+        const bucket_text = new PIXI.Text(stemp.toString(), b_style);
+        bucket_text.anchor.set(0);
+        bucket_text.x = stemp;
+        bucket_text.y = 500;
+
+        app.stage.addChild(bucket_text);
+    }
+
+    function make_game_world()
+    {
+        let b_temp = 60; //buckets far left position
+
+       
+
+        for (let i = 0; i < 9; i++)
+        {
+            set_bucket(80, 40, (b_temp), 500, app);
+            change_bucket_text(b_temp);
+
+            b_temp += 100;
+        }
+        
+        
+        set_start_point(45, 45, app.view.width/2, 0, app); //STARTING POINT
+
+        
+        set_pins(20, 20, 400, 100, app); //PINS
+        set_pins(20, 20, 500, 100, app);
+        set_pins(20, 20, 600, 100, app);
+        set_pins(20, 20, 400, 200, app);
+        set_pins(20, 20, 500, 200, app);
+        set_pins(20, 20, 600, 200, app);
+        set_pins(20, 20, 300, 200, app);
+        set_pins(20, 20, 700, 200, app);
+    }
+
     window.onload = function()
     {
-
         app = new PIXI.Application(
             {
                 width: 1000,
@@ -75,43 +131,23 @@
                 backgroundColor: 818041}
         );
         document.body.appendChild(app.view);
+        make_game_world();
+
         
-        //ADD THE WORLD ITEMS: 
-        //PINS
-        set_pins(20, 20, 400, 100, app);
-        set_pins(20, 20, 500, 100, app);
-        set_pins(20, 20, 600, 100, app);
-        set_pins(20, 20, 400, 200, app);
-        set_pins(20, 20, 500, 200, app);
-        set_pins(20, 20, 600, 200, app);
-
-        //BUCKETS
-        let b_temp = 60; //buckets far left position
-
-        for (let i = 0; i < 9; i++)
-        {
-            set_box(80, 40, (b_temp), 500, app);
-            b_temp += 100;
-        }
-        
-        //STARTING POINT
-        set_start_point(45, 45, app.view.width/2, 0, app);
-
-        //ADD PLAYER TO THE GAME
         player = PIXI.Sprite.from("/images/player_ball.png");
         set_player(player, 0.5, 40, 40, app.view.width/2, 25);
-        app.stage.addChild(player);
+        app.stage.addChild(player); //ADD PLAYER TO THE GAME
 
         app.ticker.add((delta) =>
         {
-            //player.y += player.vy;
-            //player.vy += 0.01;
+            player.y += player.vy;
+            player.vy += 0.001;
 
-            /*if (player.y > 500)
+            if (player.y > 200)
             {
-                player.vy *= -0.9;
+                player.vy *= -0.005;
                 player.y += player.vy;
-            }*/
+            }
         });
     }
    </script>
