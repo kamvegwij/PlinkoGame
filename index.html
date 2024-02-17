@@ -16,43 +16,75 @@
         pl.height = h;
 
         //move player to center of screen
-        pl.x = app_w/2;
-        pl.y = app_h/2;
+        pl.x = app_w;
+        pl.y = app_h;
+
+        pl.vy = 0;
     }
 
     function set_box(w, h, app_w, app_h, world)
     {
-        const box = PIXI.Sprite.from();
+        const box = PIXI.Sprite.from("images/collect_box.png");
 
         box.width = w;
         box.height = h;
-        box.x = app_w/2;
-        box.y = app_h/2;
+        box.x = app_w;
+        box.y = app_h;
         
         world.stage.addChild(box);
 
     }
+
+    function set_start_point(w, h, app_w, app_h, world)
+    {
+        const start_p = PIXI.Sprite.from("images/player_start_point.png");
+
+        start_p.width = w;
+        start_p.height = h;
+        start_p.x = app_w;
+        start_p.y = app_h;
+        
+        world.stage.addChild(start_p);
+    }
+
     window.onload = function()
     {
         app = new PIXI.Application(
             {
-                width: 800,
+                width: 1000,
                 height: 600,
-                backgroundColor: 0xAAAAAA
-            }
+                backgroundColor: 818041}
         );
         document.body.appendChild(app.view);
+        
+        //ADD THE WORLD ITEMS: BUCKETS
+        set_box(80, 40, 60, 500, app);
+        set_box(80, 40, 160, 500, app);
+        set_box(80, 40, 260, 500, app);
+        set_box(80, 40, 360, 500, app);
+        set_box(80, 40, 460, 500, app);
+        set_box(80, 40, 560, 500, app);
+        set_box(80, 40, 660, 500, app);
+        set_box(80, 40, 760, 500, app);
+        set_box(80, 40, 860, 500, app);
+        //STARTING POINT
+        set_start_point(45, 45, app.view.width/2, 0, app);
 
+        //ADD PLAYER TO THE GAME
         const player = PIXI.Sprite.from("/images/player_ball.png");
-        set_player(player, 0.5, 60, 60, app.view.width, app.view.height);
-
-        //place the new player in the stage:
+        set_player(player, 0.5, 40, 40, app.view.width/2, 25);
         app.stage.addChild(player);
 
         app.ticker.add((delta) =>
         {
-            player.rotation += 0.1 * delta;
-           // player.x -= 1 * delta;
+            //player.y += player.vy;
+            //player.vy += 0.01;
+
+            /*if (player.y > 500)
+            {
+                player.vy *= -0.9;
+                player.y += player.vy;
+            }*/
         });
     }
    </script>
