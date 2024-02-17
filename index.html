@@ -98,8 +98,6 @@
     {
         let b_temp = 60; //buckets far left position
 
-       
-
         for (let i = 0; i < 9; i++)
         {
             set_bucket(80, 40, (b_temp), 500, app);
@@ -140,14 +138,14 @@
 
         app.ticker.add((delta) =>
         {
-            player.y += player.vy;
+           /* player.y += player.vy;
             player.vy += 0.001;
 
             if (player.y > 200)
             {
                 player.vy *= -0.005;
                 player.y += player.vy;
-            }
+            }*/
         });
     }
    </script>
