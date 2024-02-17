@@ -8,7 +8,11 @@
 
    <script>
     let app;
-
+    let box;
+    let player;
+    let start_p;
+    let pins;
+    
     function set_player(pl, pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
     {
         pl.anchor.set(pivot)
@@ -24,7 +28,7 @@
 
     function set_box(w, h, app_w, app_h, world)
     {
-        const box = PIXI.Sprite.from("images/collect_box.png");
+        box = PIXI.Sprite.from("images/collect_box.png");
 
         box.width = w;
         box.height = h;
@@ -37,7 +41,7 @@
 
     function set_start_point(w, h, app_w, app_h, world)
     {
-        const start_p = PIXI.Sprite.from("images/player_start_point.png");
+        start_p = PIXI.Sprite.from("images/player_start_point.png");
 
         start_p.width = w;
         start_p.height = h;
@@ -47,8 +51,23 @@
         world.stage.addChild(start_p);
     }
 
+    function set_pins(w, h, app_w, app_h, world)
+    {
+
+        // WE WILL USE THE STAR PATTERN ALGORITHM TO SET THE PINS IN GRID SHAPE
+        pins = PIXI.Sprite.from("images/pins.png");
+
+        pins.width = w;
+        pins.height = h;
+        pins.x = app_w;
+        pins.y = app_h;
+        
+        world.stage.addChild(pins);
+    }
+
     window.onload = function()
     {
+
         app = new PIXI.Application(
             {
                 width: 1000,
@@ -57,21 +76,29 @@
         );
         document.body.appendChild(app.view);
         
-        //ADD THE WORLD ITEMS: BUCKETS
-        set_box(80, 40, 60, 500, app);
-        set_box(80, 40, 160, 500, app);
-        set_box(80, 40, 260, 500, app);
-        set_box(80, 40, 360, 500, app);
-        set_box(80, 40, 460, 500, app);
-        set_box(80, 40, 560, 500, app);
-        set_box(80, 40, 660, 500, app);
-        set_box(80, 40, 760, 500, app);
-        set_box(80, 40, 860, 500, app);
+        //ADD THE WORLD ITEMS: 
+        //PINS
+        set_pins(20, 20, 400, 100, app);
+        set_pins(20, 20, 500, 100, app);
+        set_pins(20, 20, 600, 100, app);
+        set_pins(20, 20, 400, 200, app);
+        set_pins(20, 20, 500, 200, app);
+        set_pins(20, 20, 600, 200, app);
+
+        //BUCKETS
+        let b_temp = 60; //buckets far left position
+
+        for (let i = 0; i < 9; i++)
+        {
+            set_box(80, 40, (b_temp), 500, app);
+            b_temp += 100;
+        }
+        
         //STARTING POINT
         set_start_point(45, 45, app.view.width/2, 0, app);
 
         //ADD PLAYER TO THE GAME
-        const player = PIXI.Sprite.from("/images/player_ball.png");
+        player = PIXI.Sprite.from("/images/player_ball.png");
         set_player(player, 0.5, 40, 40, app.view.width/2, 25);
         app.stage.addChild(player);
 
