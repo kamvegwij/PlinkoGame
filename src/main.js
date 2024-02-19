@@ -1,6 +1,6 @@
 //"NODES"
 let app;
-let bucket_node;
+let slot_node;
 let grid_pin_node;
 let start_point_node;
 let player_node;
@@ -14,12 +14,10 @@ let SPEED = 1.5;
 
 //BOOLEAN
 let ball_dropped = false;
-let hit_bucket = false; //if collided with bucket
-let hit_grid_pin = false; //if collided with grid pins
 
 //DATA STRUCTURES
-const array_buckets = [];
-const array_bucket_text = ["10", "5", "2", "1", "0", "1", "2", "5", "10"];
+const array_slots = [];
+const array_slot_text = ["10", "5", "2", "1", "0", "1", "2", "5", "10"];
 const array_grid_pins = [];
 
 // SETTER METHODS
@@ -50,17 +48,17 @@ function create_score_text_node(t)
     app.stage.addChild(score_text_node);
 }
 
-function create_bucket(w, h, app_w, app_h)
+function create_slots(w, h, app_w, app_h)
 {
-    bucket_node = PIXI.Sprite.from("images/collect_box.png");
-    bucket_node.anchor.set(0.5);
-    bucket_node.width = w;
-    bucket_node.height = h;
-    bucket_node.x = app_w;
-    bucket_node.y = app_h;
-    array_buckets.push(bucket_node);
+    slot_node = PIXI.Sprite.from("images/collect_box.png");
+    slot_node.anchor.set(0.5);
+    slot_node.width = w;
+    slot_node.height = h;
+    slot_node.x = app_w;
+    slot_node.y = app_h;
+    array_slots.push(slot_node);
 
-    app.stage.addChild(bucket_node);
+    app.stage.addChild(slot_node);
 }
 
 function create_start_point(w, h, app_w, app_h)
@@ -115,14 +113,14 @@ function set_bucket_text(pos_x, stemp)
 
 function create_game_world()
 {
-    let bucket_pos = 90; //buckets far left position
+    let slot_pos = 90; //buckets far left position
 
     for (let i = 0; i < 9; i++)
     {
         // add the buckets to the game world:
-        create_bucket(80, 40, bucket_pos, 500);
-        set_bucket_text(bucket_pos, array_bucket_text[i]);
-        bucket_pos += 100;
+        create_slots(80, 40, slot_pos, 500);
+        set_bucket_text(slot_pos, array_slot_text[i]);
+        slot_pos += 100;
     }
 
    // set_bucket_text(bucket_score_text);
@@ -193,7 +191,7 @@ function drop_player()
 function _reset_player_pos(pos)
 {
     //this function resets the player position to the starting point
-    if (player_node.y >= pos && !hit_bucket)
+    if (player_node.y >= pos)
     {
         SPEED = 1.5;
         player_node.position.set(app.view.width/2, 25);
@@ -238,6 +236,10 @@ function gameLoop()
         }     
     }
 
+function add_score_from_slot()
+{
+    
+}
 function isColliding(a, b)
 {
     //returns a bool
