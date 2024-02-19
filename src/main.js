@@ -10,6 +10,7 @@ let drop_button_node;
 //DATA VARIABLES
 let score_text = "0";
 let player_score = 100; //default score 100, deduct 10
+let SPEED = 1.5;
 
 //BOOLEAN
 let ball_dropped = false;
@@ -164,6 +165,7 @@ function grid_pins_mechanics()
         
     }
 }
+
 function buckets_mechanics()
 {
     //in this function I add functionality to the score buckets:
@@ -193,6 +195,7 @@ function _reset_player_pos(pos)
     //this function resets the player position to the starting point
     if (player_node.y >= pos && !hit_bucket)
     {
+        SPEED = 1.5;
         player_node.position.set(app.view.width/2, 25);
         ball_dropped = false;
     }
@@ -204,7 +207,7 @@ window.onload = function()
         {
             width: 1000,
             height: 800,
-            backgroundColor: 818041}
+            backgroundColor: 'gray'}
     );
     document.body.appendChild(app.view);
 
@@ -224,8 +227,35 @@ function gameLoop()
     {
         score_text_node.text = player_score.toString();
 
+        if (isColliding(player_node, array_grid_pins[1]))
+        {
+            player_node.y = 0;
+            SPEED = 0;
+        }
         if (player_score > 0 && ball_dropped == true)
         {
             _reset_player_pos(500);   
         }     
     }
+
+function isColliding(a, b)
+{
+    //returns a bool
+    let obj1 = a.getBounds(); let obj2 = b.getBounds();
+
+    let x_intercept = obj1.x + obj2.width > 
+    obj2.x && obj1.x < obj2.x + obj2.width;
+
+    let y_intercept = obj1.y + obj2.height > 
+    obj2.y && obj1.y < obj2.y + obj2.height;
+
+    if (x_intercept == true && y_intercept == true)
+    {
+        return true;
+    }
+
+    else
+    {
+        return false;
+    }
+}
