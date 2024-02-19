@@ -34,6 +34,7 @@ function create_player(w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
     player_node.position.set(app_w, app_h);
 
     player_node.vy = 0;
+    player_node.vx = 0;
 
     player_node.interactive = true; //allows input events
 
@@ -129,7 +130,7 @@ function create_game_world()
 
     create_drop_button();
     create_start_point(45, 45, app.view.width/2, 0); //STARTING POINT
-
+    
     create_pins(40, 40, 400, 100); //TODO: Algorithm to draw this grid
     create_pins(40, 40, 500, 100);
     create_pins(40, 40, 600, 100);
@@ -138,9 +139,10 @@ function create_game_world()
     create_pins(40, 40, 600, 200);
     create_pins(40, 40, 300, 200);
     create_pins(40, 40, 700, 200);
-    create_pins(40, 40, 400, 300);
-    create_pins(40, 40, 500, 300);
-    create_pins(40, 40, 600, 300);
+
+    create_pins(40, 40, 400, 300); //
+    create_pins(40, 40, 500, 300); //
+    create_pins(40, 40, 600, 300); //
     create_pins(40, 40, 300, 300);
     create_pins(40, 40, 700, 300);
     create_pins(40, 40, 800, 300);
@@ -162,7 +164,14 @@ function grid_pins_mechanics()
     let len = array_grid_pins.length;
     for (let x = 0; x < len; x++)
     {
-        
+        if (isColliding(player_node, array_grid_pins[x]))
+        {
+            player_node.vy *= -0.9;
+            player_node.vx += 0.5;
+            //get the point where the objects collide and push the ball the opposite
+            // A = arctan ( obj.y/obj.x )__> 
+
+        }
     }
 }
 
@@ -180,6 +189,7 @@ function buckets_mechanics()
 function drop_player()
 {
     //develop an algorithm to guide player passed the pins.
+
     drop_button_node.on('pointerdown', function()
     {
         ball_dropped = true
@@ -226,7 +236,11 @@ function gameLoop()
         drop_player();
         if (ball_dropped == true)
         {
-            player_node.y += 1;
+            player_node.x += player_node.vx;
+            player_node.y += player_node.vy;
+            player_node.vy += 0.4;      
+
+            grid_pins_mechanics();
         }
         
         score_text_node.text = player_score.toString();
