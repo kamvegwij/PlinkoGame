@@ -164,13 +164,13 @@ function grid_pins_mechanics()
     }
 }
 
-function buckets_mechanics()
+function slots_mechanics()
 {
-    //in this function I add functionality to the score buckets:
+    //in this function I add functionality to the slots:
     let len = array_buckets.length;
     for (let x = 0; x < len; x++)
     {
-        
+        console.log("testing slots");
     }
 }
 
@@ -216,7 +216,7 @@ window.onload = function()
     
     drop_player(); 
     grid_pins_mechanics();
-    buckets_mechanics();
+    slots_mechanics();
 
     app.ticker.add(gameLoop);
 }
