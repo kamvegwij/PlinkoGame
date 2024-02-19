@@ -17,10 +17,15 @@ let hit_grid_pin = false; //if collided with grid pins
 
 //DATA STRUCTURES
 const array_buckets = [];
-const array_bucket_text = ["5.6", "2.1", "1.1", "1", "0.5", "1", "1.1", "2.1", "5.6"];
+const array_bucket_text = ["10", "5", "2", "1", "0", "1", "2", "5", "10"];
 const array_grid_pins = [];
 
 // SETTER METHODS
+
+function changeMargin() {
+    document.getElementById("main-game").style.marginTop = "200px";
+  }
+
 function create_player(pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
 {
     player_node = PIXI.Sprite.from("/images/player_ball.png");
@@ -169,6 +174,7 @@ function drop_player()
         player_node.on('pointerdown', function()
         {
             ball_dropped = true
+            player_node.y += 100;
             player_score -= 10; //deduct score for dropping ball
 
         });
@@ -184,15 +190,12 @@ function _reset_player_pos(pos)
     }
 }
 
-
-
-
 window.onload = function()
 {
     app = new PIXI.Application(
         {
             width: 1000,
-            height: 600,
+            height: 800,
             backgroundColor: 818041}
     );
     document.body.appendChild(app.view);
@@ -212,8 +215,6 @@ window.onload = function()
 
         if (player_score > 0 && ball_dropped == true)
         {
-            console.log(player_node.y);
-            player_node.y += 1;
             _reset_player_pos(500);   
         }
         
