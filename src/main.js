@@ -5,6 +5,7 @@ let grid_pin_node;
 let start_point_node;
 let player_node;
 let score_text_node; 
+let drop_button_node;
 
 //DATA VARIABLES
 let score_text = "0";
@@ -21,10 +22,6 @@ const array_bucket_text = ["10", "5", "2", "1", "0", "1", "2", "5", "10"];
 const array_grid_pins = [];
 
 // SETTER METHODS
-
-function changeMargin() {
-    document.getElementById("main-game").style.marginTop = "200px";
-  }
 
 function create_player(pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
 {
@@ -91,6 +88,17 @@ function create_pins(w, h, app_w, app_h)
     app.stage.addChild(grid_pin_node);
 }
 
+function create_drop_button()
+{
+    drop_button_node = PIXI.Sprite.from("images/playbtn.png");
+    drop_button_node.anchor.set(0.5);
+    drop_button_node.width = 200;
+    drop_button_node.height = 80;
+    drop_button_node.x = app.view.width/2;
+    drop_button_node.y = 650;
+    drop_button_node.interactive = true;
+    app.stage.addChild(drop_button_node);
+}
 function set_bucket_text(pos_x, stemp)
 {//function to change bucket score text
     const b_style = new PIXI.TextStyle({
@@ -118,33 +126,33 @@ function create_game_world()
 
    // set_bucket_text(bucket_score_text);
 
-    
+    create_drop_button();
     create_start_point(45, 45, app.view.width/2, 0); //STARTING POINT
 
-    create_pins(20, 20, 400, 100); //TODO: Algorithm to draw this grid
-    create_pins(20, 20, 500, 100);
-    create_pins(20, 20, 600, 100);
-    create_pins(20, 20, 400, 200);
-    create_pins(20, 20, 500, 200);
-    create_pins(20, 20, 600, 200);
-    create_pins(20, 20, 300, 200);
-    create_pins(20, 20, 700, 200);
-    create_pins(20, 20, 400, 300);
-    create_pins(20, 20, 500, 300);
-    create_pins(20, 20, 600, 300);
-    create_pins(20, 20, 300, 300);
-    create_pins(20, 20, 700, 300);
-    create_pins(20, 20, 800, 300);
-    create_pins(20, 20, 200, 300);
-    create_pins(20, 20, 400, 400);
-    create_pins(20, 20, 500, 400);
-    create_pins(20, 20, 600, 400);
-    create_pins(20, 20, 300, 400);
-    create_pins(20, 20, 700, 400);
-    create_pins(20, 20, 800, 400);
-    create_pins(20, 20, 200, 400);
-    create_pins(20, 20, 100, 400);
-    create_pins(20, 20, 900, 400);
+    create_pins(40, 40, 400, 100); //TODO: Algorithm to draw this grid
+    create_pins(40, 40, 500, 100);
+    create_pins(40, 40, 600, 100);
+    create_pins(40, 40, 400, 200);
+    create_pins(40, 40, 500, 200);
+    create_pins(40, 40, 600, 200);
+    create_pins(40, 40, 300, 200);
+    create_pins(40, 40, 700, 200);
+    create_pins(40, 40, 400, 300);
+    create_pins(40, 40, 500, 300);
+    create_pins(40, 40, 600, 300);
+    create_pins(40, 40, 300, 300);
+    create_pins(40, 40, 700, 300);
+    create_pins(40, 40, 800, 300);
+    create_pins(40, 40, 200, 300);
+    create_pins(40, 40, 400, 400);
+    create_pins(40, 40, 500, 400);
+    create_pins(40, 40, 600, 400);
+    create_pins(40, 40, 300, 400);
+    create_pins(40, 40, 700, 400);
+    create_pins(40, 40, 800, 400);
+    create_pins(40, 40, 200, 400);
+    create_pins(40, 40, 100, 400);
+    create_pins(40, 40, 900, 400);
 }
 
 function grid_pins_mechanics()
@@ -171,7 +179,7 @@ function drop_player()
 {
     if (player_node.y <= 500 && player_node.y >= 0)
     {
-        player_node.on('pointerdown', function()
+        drop_button_node.on('pointerdown', function()
         {
             ball_dropped = true
             player_node.y += 100;
@@ -202,7 +210,7 @@ window.onload = function()
 
     //create game world and add nodes:
     create_game_world();
-    create_player(0.5, 40, 40, app.view.width/2, 25);
+    create_player(0.5, 40, 40, app.view.width/2, 0);
     create_score_text_node(score_text);
     
     drop_player(); 
