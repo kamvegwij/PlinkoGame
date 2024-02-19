@@ -4,5 +4,6 @@
   },
   "dependencies": {
     "pixi.js": "^7.4.0"
-  }
+  },
+  "type": "module"
 }
