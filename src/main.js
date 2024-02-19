@@ -1,17 +1,26 @@
+//"NODES"
 let app;
 let bucket_node;
 let grid_pin_node;
 let start_point_node;
-
 let player_node;
-let score_text_node; let score_text = "0";
-let player_score = 100; //default score 100, deduct 10
-let ball_dropped = false;
+let score_text_node; 
 
+//DATA VARIABLES
+let score_text = "0";
+let player_score = 100; //default score 100, deduct 10
+
+//BOOLEAN
+let ball_dropped = false;
+let hit_bucket = false; //if collided with bucket
+let hit_grid_pin = false; //if collided with grid pins
+
+//DATA STRUCTURES
 const array_buckets = [];
-const array_bucket_text = [];
+const array_bucket_text = ["5.6", "2.1", "1.1", "1", "0.5", "1", "1.1", "2.1", "5.6"];
 const array_grid_pins = [];
 
+// SETTER METHODS
 function create_player(pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
 {
     player_node = PIXI.Sprite.from("/images/player_ball.png");
@@ -41,7 +50,7 @@ function create_score_text_node(t)
 function create_bucket(w, h, app_w, app_h)
 {
     bucket_node = PIXI.Sprite.from("images/collect_box.png");
-
+    bucket_node.anchor.set(0.5);
     bucket_node.width = w;
     bucket_node.height = h;
     bucket_node.x = app_w;
@@ -77,35 +86,36 @@ function create_pins(w, h, app_w, app_h)
     app.stage.addChild(grid_pin_node);
 }
 
-function set_bucket_text(stemp)
+function set_bucket_text(pos_x, stemp)
 {//function to change bucket score text
     const b_style = new PIXI.TextStyle({
         fontSize: 20
     });
 
     const bucket_text = new PIXI.Text(stemp.toString(), b_style);
-    bucket_text.anchor.set(0);
-    bucket_text.x = stemp;
+    bucket_text.anchor.set(0.5);
+    bucket_text.x = pos_x;
     bucket_text.y = 500;
-
     app.stage.addChild(bucket_text);
 }
 
 function create_game_world()
 {
-    let bucket_score_text = 60; //buckets far left position
+    let bucket_pos = 90; //buckets far left position
 
     for (let i = 0; i < 9; i++)
     {
-        create_bucket(80, 40, (bucket_score_text), 500);
-        set_bucket_text(bucket_score_text);
-
-        bucket_score_text += 100;
+        // add the buckets to the game world:
+        create_bucket(80, 40, bucket_pos, 500);
+        set_bucket_text(bucket_pos, array_bucket_text[i]);
+        bucket_pos += 100;
     }
-        
-    create_start_point(45, 45, app.view.width/2, 0); //STARTING POINT
+
+   // set_bucket_text(bucket_score_text);
 
     
+    create_start_point(45, 45, app.view.width/2, 0); //STARTING POINT
+
     create_pins(20, 20, 400, 100); //TODO: Algorithm to draw this grid
     create_pins(20, 20, 500, 100);
     create_pins(20, 20, 600, 100);
@@ -151,6 +161,7 @@ function buckets_mechanics()
     }
 }
 
+//GAME MECHANICS
 function drop_player()
 {
     if (player_node.y <= 500 && player_node.y >= 0)
@@ -166,12 +177,16 @@ function drop_player()
 function _reset_player_pos(pos)
 {
     //this function resets the player position to the starting point
-    if (player_node.y >= pos)
+    if (player_node.y >= pos && !hit_bucket)
     {
         player_node.position.set(app.view.width/2, 25);
         ball_dropped = false;
     }
 }
+
+
+
+
 window.onload = function()
 {
     app = new PIXI.Application(
