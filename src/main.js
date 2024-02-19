@@ -19,7 +19,7 @@ let hit_grid_pin = false; //if collided with grid pins
 
 //DATA STRUCTURES
 const array_buckets = [];
-const array_slot_text = ["10", "5", "2", "1", "0", "1", "2", "5", "10"];
+const array_slot_text = [10, 5, 2, 1, 115, 1, 2, 5, 10];
 const array_grid_pins = [];
 
 // SETTER METHODS
@@ -190,15 +190,12 @@ function drop_player()
         });
     }
 }
-function _reset_player_pos(pos)
+function _reset_player_pos()
 {
     //this function resets the player position to the starting point
-    if (player_node.y >= pos && !hit_bucket)
-    {
-        SPEED = 1.5;
-        player_node.position.set(app.view.width/2, 25);
-        ball_dropped = false;
-    }
+    SPEED = 1.5;
+    player_node.position.set(app.view.width/2, 25);
+    ball_dropped = false;
 }
 
 window.onload = function()
@@ -226,21 +223,24 @@ window.onload = function()
 function gameLoop()
     {
         score_text_node.text = player_score.toString();
-
-        if (isColliding(player_node, array_grid_pins[0]))
-        {
-            player_node.y = 0;
-            SPEED = 0;
-        }
-        if (player_score > 0 && ball_dropped == true)
-        {
-            _reset_player_pos(500);   
-        }     
+        add_score_from_slot();   
     }
 
 function add_score_from_slot()
 {
-    
+    let counter = 0;
+    for (let x = 0; x < array_buckets.length; x++)
+    {
+        if (isColliding(player_node, array_buckets[x]))
+        {
+            player_score += array_slot_text[counter];
+            _reset_player_pos()
+            break; //break out of the loop.
+        }
+        else { counter++; }
+        //check which slot the player has landed on
+        
+    }
 }
 function isColliding(a, b)
 {
