@@ -14,6 +14,6 @@
 - [x] Implement score system:
     - [x] Deduct 10 from original 100 player points for dropping
     - [x] Increase score for landing in bucket
-    - [x] Algorithm to guide player to pre-determined bucket.
+    - [ ] Algorithm to guide player to pre-determined bucket.
  
 # Task 2:
