@@ -23,10 +23,10 @@ const array_grid_pins = [];
 
 // SETTER METHODS
 
-function create_player(pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
+function create_player(w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
 {
     player_node = PIXI.Sprite.from("/images/player_ball.png");
-    player_node.anchor.set(pivot)
+    player_node.anchor.set(0.5, 0.5)
     player_node.width = w;
     player_node.height = h;
 
@@ -210,21 +210,22 @@ window.onload = function()
 
     //create game world and add nodes:
     create_game_world();
-    create_player(0.5, 40, 40, app.view.width/2, 0);
+    create_player(40, 40, app.view.width/2, 0);
     create_score_text_node(score_text);
     
     drop_player(); 
     grid_pins_mechanics();
     buckets_mechanics();
 
-    app.ticker.add((delta) =>
+    app.ticker.add(gameLoop);
+}
+
+function gameLoop()
     {
         score_text_node.text = player_score.toString();
 
         if (player_score > 0 && ball_dropped == true)
         {
             _reset_player_pos(500);   
-        }
-        
-    });
-}
+        }     
+    }
