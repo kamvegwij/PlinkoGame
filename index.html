@@ -7,41 +7,40 @@
     <script src = "js/pixi.min.js"></script>
 
    <script>
-    
-
-    class WorldItems
-    {
-        constructor(w, h, app_w, app_h, app_obj)
-        {
-            this.w = w;
-            this.h = h;
-            this.app_h = app_w;
-            this.app_w = app_h;
-            this.app = app_obj;
-        }
-        
-    }
 
     let app;
     let box;
-    let player;
+
     let start_p;
     let pins;
-
-    function set_player(pl, pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
+    let player_node;
+    let score_text_node; let score_text = "n/a";
+    let player_score = 100; //default score
+    
+    function create_player(pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
     {
-        pl.anchor.set(pivot)
-        pl.width = w;
-        pl.height = h;
+        player_node = PIXI.Sprite.from("/images/player_ball.png");
+        player_node.anchor.set(pivot)
+        player_node.width = w;
+        player_node.height = h;
 
-        //move player to center of screen
-        pl.x = app_w;
-        pl.y = app_h;
+        player_node.position.set(app_w, app_h);
 
-        pl.vy = 0;
+        player_node.vy = 0;
+        app.stage.addChild(player_node)
     }
 
-    function set_bucket(w, h, app_w, app_h, world)
+    function create_text_node(t)
+    {
+        const text_style = new PIXI.TextStyle({
+            fontSize: 40
+        });
+
+        score_text_node = new PIXI.Text(t.toString(), text_style);
+        app.stage.addChild(score_text_node);
+    }
+
+    function create_bucket(w, h, app_w, app_h, world)
     {
         box = PIXI.Sprite.from("images/collect_box.png");
 
@@ -54,7 +53,7 @@
 
     }
 
-    function set_start_point(w, h, app_w, app_h, world)
+    function create_start_point(w, h, app_w, app_h, world)
     {
         start_p = PIXI.Sprite.from("images/player_start_point.png");
 
@@ -66,7 +65,7 @@
         world.stage.addChild(start_p);
     }
 
-    function set_pins(w, h, app_w, app_h, world)
+    function create_pins(w, h, app_w, app_h, world)
     {
 
         // WE WILL USE THE STAR PATTERN ALGORITHM TO SET THE PINS IN GRID SHAPE
@@ -80,7 +79,7 @@
         world.stage.addChild(pins);
     }
 
-    function change_bucket_text(stemp)
+    function set_bucket_text(stemp)
     {//function to change bucket score text
         const b_style = new PIXI.TextStyle({
             fontSize: 20
@@ -94,30 +93,30 @@
         app.stage.addChild(bucket_text);
     }
 
-    function make_game_world()
+    function create_game_world()
     {
         let b_temp = 60; //buckets far left position
 
         for (let i = 0; i < 9; i++)
         {
-            set_bucket(80, 40, (b_temp), 500, app);
-            change_bucket_text(b_temp);
+            create_bucket(80, 40, (b_temp), 500, app);
+            set_bucket_text(b_temp);
 
             b_temp += 100;
         }
         
         
-        set_start_point(45, 45, app.view.width/2, 0, app); //STARTING POINT
+        create_start_point(45, 45, app.view.width/2, 0, app); //STARTING POINT
 
         
-        set_pins(20, 20, 400, 100, app); //PINS
-        set_pins(20, 20, 500, 100, app);
-        set_pins(20, 20, 600, 100, app);
-        set_pins(20, 20, 400, 200, app);
-        set_pins(20, 20, 500, 200, app);
-        set_pins(20, 20, 600, 200, app);
-        set_pins(20, 20, 300, 200, app);
-        set_pins(20, 20, 700, 200, app);
+        create_pins(20, 20, 400, 100, app); //PINS
+        create_pins(20, 20, 500, 100, app);
+        create_pins(20, 20, 600, 100, app);
+        create_pins(20, 20, 400, 200, app);
+        create_pins(20, 20, 500, 200, app);
+        create_pins(20, 20, 600, 200, app);
+        create_pins(20, 20, 300, 200, app);
+        create_pins(20, 20, 700, 200, app);
     }
 
     window.onload = function()
@@ -129,23 +128,21 @@
                 backgroundColor: 818041}
         );
         document.body.appendChild(app.view);
-        make_game_world();
-
-        
-        player = PIXI.Sprite.from("/images/player_ball.png");
-        set_player(player, 0.5, 40, 40, app.view.width/2, 25);
-        app.stage.addChild(player); //ADD PLAYER TO THE GAME
+            
+        //create game world and add nodes:
+        create_game_world();
+        create_player(0.5, 40, 40, app.view.width/2, 25);
+        create_text_node(score_text);
 
         app.ticker.add((delta) =>
         {
-           /* player.y += player.vy;
-            player.vy += 0.001;
+            score_text_node.text = player_score.toString();
 
-            if (player.y > 200)
+            if (player_score > 0)
             {
-                player.vy *= -0.005;
-                player.y += player.vy;
-            }*/
+                //player_score -= 0.01;
+            }
+            
         });
     }
    </script>
