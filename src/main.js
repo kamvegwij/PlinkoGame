@@ -4,11 +4,12 @@ let grid_pin_node;
 let start_point_node;
 
 let player_node;
-let score_text_node; let score_text = "n/a";
-let player_score = 100; //default score
+let score_text_node; let score_text = "0";
+let player_score = 100; //default score 100, deduct 10
 let ball_dropped = false;
 
 const array_buckets = [];
+const array_bucket_text = [];
 const array_grid_pins = [];
 
 function create_player(pivot, w, h, app_w, app_h) //FUNCTION TO CREATE NEW PLAYER
@@ -48,7 +49,6 @@ function create_bucket(w, h, app_w, app_h)
     array_buckets.push(bucket_node);
 
     app.stage.addChild(bucket_node);
-
 }
 
 function create_start_point(w, h, app_w, app_h)
@@ -159,13 +159,17 @@ function drop_player()
         {
             ball_dropped = true
             player_score -= 10; //deduct score for dropping ball
-            
+
         });
     }
-    else
+}
+function _reset_player_pos(pos)
+{
+    //this function resets the player position to the starting point
+    if (player_node.y >= pos)
     {
-        player.position.set(app.view.width/2, 25);
-        ball_dropped = false; //reset
+        player_node.position.set(app.view.width/2, 25);
+        ball_dropped = false;
     }
 }
 window.onload = function()
@@ -195,6 +199,7 @@ window.onload = function()
         {
             console.log(player_node.y);
             player_node.y += 1;
+            _reset_player_pos(500);   
         }
         
     });
