@@ -179,19 +179,20 @@ function buckets_mechanics()
 //GAME MECHANICS
 function drop_player()
 {
-    if (player_node.y <= 500 && player_node.y >= 0)
+    //develop an algorithm to guide player passed the pins.
+    drop_button_node.on('pointerdown', function()
     {
-        drop_button_node.on('pointerdown', function()
-        {
-            ball_dropped = true
-            player_node.y += 100;
-            player_score -= 10; //deduct score for dropping ball
-
-        });
-    }
+        ball_dropped = true
+    });
 }
+
 function _reset_player_pos()
 {
+    if (player_score > 10)
+    {
+        player_score -= 10; //deduct 10 points for playing
+    } 
+    
     //this function resets the player position to the starting point
     SPEED = 1.5;
     player_node.position.set(app.view.width/2, 25);
@@ -213,7 +214,7 @@ window.onload = function()
     create_player(40, 40, app.view.width/2, 0);
     create_score_text_node(score_text);
     
-    drop_player(); 
+    //drop_player(); 
     grid_pins_mechanics();
     buckets_mechanics();
 
@@ -222,6 +223,12 @@ window.onload = function()
 
 function gameLoop()
     {
+        drop_player();
+        if (ball_dropped == true)
+        {
+            player_node.y += 1;
+        }
+        
         score_text_node.text = player_score.toString();
         add_score_from_slot();   
     }
