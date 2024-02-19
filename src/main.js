@@ -14,9 +14,11 @@ let SPEED = 1.5;
 
 //BOOLEAN
 let ball_dropped = false;
+let hit_bucket = false; //if collided with bucket
+let hit_grid_pin = false; //if collided with grid pins
 
 //DATA STRUCTURES
-const array_slots = [];
+const array_buckets = [];
 const array_slot_text = ["10", "5", "2", "1", "0", "1", "2", "5", "10"];
 const array_grid_pins = [];
 
@@ -56,7 +58,7 @@ function create_slots(w, h, app_w, app_h)
     slot_node.height = h;
     slot_node.x = app_w;
     slot_node.y = app_h;
-    array_slots.push(slot_node);
+    array_buckets.push(slot_node);
 
     app.stage.addChild(slot_node);
 }
@@ -164,13 +166,13 @@ function grid_pins_mechanics()
     }
 }
 
-function slots_mechanics()
+function buckets_mechanics()
 {
-    //in this function I add functionality to the slots:
+    //in this function I add functionality to the score buckets:
     let len = array_buckets.length;
     for (let x = 0; x < len; x++)
     {
-        console.log("testing slots");
+        
     }
 }
 
@@ -191,7 +193,7 @@ function drop_player()
 function _reset_player_pos(pos)
 {
     //this function resets the player position to the starting point
-    if (player_node.y >= pos)
+    if (player_node.y >= pos && !hit_bucket)
     {
         SPEED = 1.5;
         player_node.position.set(app.view.width/2, 25);
@@ -216,7 +218,7 @@ window.onload = function()
     
     drop_player(); 
     grid_pins_mechanics();
-    slots_mechanics();
+    buckets_mechanics();
 
     app.ticker.add(gameLoop);
 }
@@ -225,7 +227,7 @@ function gameLoop()
     {
         score_text_node.text = player_score.toString();
 
-        if (isColliding(player_node, array_grid_pins[1]))
+        if (isColliding(player_node, array_grid_pins[0]))
         {
             player_node.y = 0;
             SPEED = 0;
