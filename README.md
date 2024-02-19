@@ -5,8 +5,7 @@
 - Javascript (testing and final export)
 - Typescript (main codebase)
 - PixiJS (rendering the game in browser)
-
-# Issues
+  
 # Task 1:
 - [x] Import art assets to build the game world
 - [x] Apply physics to the player ball (collisions and collision tracking with other objects)
