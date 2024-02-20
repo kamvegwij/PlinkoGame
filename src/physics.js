@@ -41,23 +41,34 @@ export class Physics
 
     navigate_path(a, x_pos, y_pos)
     {
-
-
-        a.x += a.vx;
-        a.y += a.vy;
-        a.vy += 0.08; 
+        //a.vy += 0.08; 
 
         if (a.x > x_pos && a.y < y_pos)
-            {
-                a.vx -= 0.01;
-                a.vy += 0.01;
-            }
+        {
+            a.x -= 0.25;
+            a.y += 0.25;
+            // a.vx -= 0.01;
+            //a.vy += 0.01;
+        }
 
         else if (a.x < x_pos && a.y < y_pos)
         {
-            a.vx += 0.01;
-            a.vy += 0.01;
+            a.x += 0.25;
+            a.y += 0.25;
+            //a.vx += 0.01;
+           // a.vy += 0.01;
         }
         
+        else if (a.x == x_pos && a.y < y_pos)
+        {
+            a.x += 0;
+            a.y += 0.25;
+        }
+        
+        else if (a.x == x_pos && a.y < y_pos)
+        {
+            a.x += 0.25;
+            a.y += 0;
+        }
     }
 }

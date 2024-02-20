@@ -14,7 +14,8 @@ let drop_button_node;
 let score_text = "0";
 let player_score = 100; //default score 100, deduct 10
 let SPEED = 1.5;
-
+let player_test_pos;
+let slot_test_pos;
 //BOOLEAN
 let ball_dropped = false;
 let hit_bucket = false; //if collided with bucket
@@ -196,7 +197,7 @@ function grid_pins_mechanics()
     }
 }
 
-function buckets_mechanics()
+function slots_mechanics()
 {
     //in this function I add functionality to the score buckets:
     let len = array_buckets.length;
@@ -245,16 +246,27 @@ window.onload = function()
     create_player(40, 40, app.view.width/2, 0);
     create_score_text_node(score_text);
     app.ticker.add(gameLoop);
+
+    //text nodes for testing:
+    player_test_pos = new PIXI.Text("n/a");
+    player_test_pos.position.set(100, 200);
+    app.stage.addChild(player_test_pos)
+
+    slot_test_pos = new PIXI.Text("n/a");
+    slot_test_pos.position.set(100, 300);
+    app.stage.addChild(slot_test_pos)
 }
 
 function gameLoop()
     {
+        player_test_pos.text = player_node.x.toString() + ",  " + player_node.y.toString();
+        slot_test_pos.text = slots_x_pos[6].toString() + ",  " + slots_y_pos[6].toString();
         drop_player();
         if (ball_dropped == true)
         {
-            physics.navigate_path(player_node, slots_x_pos[6], slots_y_pos[6]);
+            physics.navigate_path(player_node, slots_x_pos[2], slots_y_pos[2]);
             grid_pins_mechanics();
-            buckets_mechanics();
+            slots_mechanics();
         }
         
         score_text_node.text = player_score.toString();
