@@ -218,20 +218,35 @@ function drop_player()
 
     drop_button_node.on('pointerdown', function()
     {
+        let state = false;
         rand_Limit = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(0) + 1) + Math.ceil(2)); //randomise how many tries it will take to get a high value slot.
-        rand_Num = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0) + 1) + Math.ceil(0));
-        
-        if (rand_Num == 0 || rand_Num == 1 || rand_Num == 8 || rand_Num == 9)
+        rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0)); //randomises the different slots.
+
+        while (state == false)
         {
-            high_val_count += 1; //increase the amount of times we get high value slots.
+            // this algorithm reduces the probability of getting a high value slot
+            
+            if (rand_Num == 0 || rand_Num == 1 || rand_Num == 7 || rand_Num == 8)
+            {
+                if (high_val_count >= rand_Limit)
+                {
+                    high_val_count = 0; //reset
+                    state = true
+                }
+                high_val_count += 1; //increase the amount of times we get high value slots.
+                rand_Num = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0) + 1) + Math.ceil(0));         
+            }
+            else
+            {
+                state = true;
+            }
         }
 
-        if (high_val_count >= 0)
-        {
-            ball_dropped = true
-        }
-        console.log(rand_Limit);
-        console.log(rand_Num);
+        ball_dropped = true
+        
+        console.log("Limit: ", rand_Limit);
+        console.log("Slot number: ", rand_Num);
+        console.log("Count: ", high_val_count);
         
     });
 }
@@ -271,26 +286,6 @@ window.onload = function()
     create_score_text_node(score_text);
     app.ticker.add(gameLoop);
 
-    //text nodes for testing:
-   /* player_test_pos = new PIXI.Text();
-    player_test_pos.position.set(100, 200);
-    app.stage.addChild(player_test_pos)
-
-    slot_test_pos = new PIXI.Text();
-    slot_test_pos.position.set(100, 300);
-    app.stage.addChild(slot_test_pos)*/
-
-    
-    /*temp = PIXI.Sprite.from("images/player_ball.png");
-    temp.anchor.set(0.5, 0.5);
-    temp.width = 50;
-    temp.height = 50;
-    temp.vy = 0;
-    temp.vx = 0;
-    temp.x = app.view.width/2 - 200;
-    temp.y = app.view.height - 200;
-    app.stage.addChild(temp);
-    */
     drop_player();
 }
 
@@ -298,11 +293,6 @@ window.onload = function()
 
 function gameLoop()
     {
-       // player_test_pos.text = player_node.x.toString() + ",  " + player_node.y.toString();
-       // slot_test_pos.text = slots_x_pos[6].toString() + ",  " + slots_y_pos[6].toString();
-       
-
-       
         if (ball_dropped == true)
         {
             choose_slot();
