@@ -16,9 +16,10 @@ let player_score = 100; //default score 100, deduct 10
 let SPEED = 1.5;
 let player_test_pos;
 let slot_test_pos;
+
 //BOOLEAN
 let ball_dropped = false;
-let hit_bucket = false; //if collided with bucket
+let hit_slot = false; //if collided with bucket
 let hit_grid_pin = false; //if collided with grid pins
 
 //DATA STRUCTURES
@@ -32,7 +33,7 @@ const pin_x_pos = [];
 const pin_y_pos = [];
 
 // OBJECTS
-const physics = new Physics("none");
+const physics = new Physics();
 
 // SETTER METHODS
 
@@ -189,10 +190,12 @@ function grid_pins_mechanics()
     {
         if (physics.is_colliding(player_node, array_grid_pins[x]))
         {
+            hit_grid_pin = true;
             physics.bounce_object(player_node, array_grid_pins[x]);
-            //physics.navigate_path(player_node, slots_x_pos[8], slots_y_pos[8]);
-            //get the point where the objects collide and push the ball the opposite
-            // A = arctan ( obj.y/obj.x )__> 
+        }
+        else
+        {
+            hit_grid_pin = false;
         }
     }
 }
@@ -248,20 +251,21 @@ window.onload = function()
     app.ticker.add(gameLoop);
 
     //text nodes for testing:
-    player_test_pos = new PIXI.Text("n/a");
+   /* player_test_pos = new PIXI.Text();
     player_test_pos.position.set(100, 200);
     app.stage.addChild(player_test_pos)
 
-    slot_test_pos = new PIXI.Text("n/a");
+    slot_test_pos = new PIXI.Text();
     slot_test_pos.position.set(100, 300);
-    app.stage.addChild(slot_test_pos)
+    app.stage.addChild(slot_test_pos)*/
 }
 
 function gameLoop()
     {
-        player_test_pos.text = player_node.x.toString() + ",  " + player_node.y.toString();
-        slot_test_pos.text = slots_x_pos[6].toString() + ",  " + slots_y_pos[6].toString();
-        drop_player();
+       // player_test_pos.text = player_node.x.toString() + ",  " + player_node.y.toString();
+       // slot_test_pos.text = slots_x_pos[6].toString() + ",  " + slots_y_pos[6].toString();
+       
+       drop_player();
         if (ball_dropped == true)
         {
             physics.navigate_path(player_node, slots_x_pos[2], slots_y_pos[2]);

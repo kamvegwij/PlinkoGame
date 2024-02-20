@@ -1,9 +1,13 @@
 export class Physics
 {
     #tag = "none"; 
-    constructor(tag)
+    #gravity = -9.8;
+    #friction = 2;
+
+    constructor(gravity = -9.8, friction = 0.2)
     {
-        this.tag = tag;
+        this.#gravity = gravity;
+        this.#friction = friction;
     }
 
     get_tag()
@@ -35,39 +39,74 @@ export class Physics
 
     bounce_object(a, b)
     {
-        a.vy *= 0.01;
-        a.vx -= 0.01;
+        //get the point where the objects collide and push the ball the opposite
+
+        // angle in degrees
+        var angleDeg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
+
+        a.y += a.vy;
+        a.x += a.vx;
+
+        a.vy += 0.2;
+        a.vx += 0.05;
+
+        if (angleDeg >= 0 && angleDeg < 90)
+        {
+            a.vy *= -0.7;
+            a.vx *= 0.7;
+            a.y += a.vy;
+            a.x += a.vx;
+        }
+        else if (angleDeg >= 90 && angleDeg < 180)
+        {
+            a.vy *= -2;
+            a.vx *= -0.7;
+            a.y += a.vy;
+            a.x += a.vx;
+        }
+        if (angleDeg >= 180 && angleDeg < 270)
+        {
+            a.vy *= 2;
+            a.vx *= -0.7;
+            a.y += a.vy;
+            a.x += a.vx;
+        }
+        if (angleDeg >= 270 && angleDeg < 360)
+        {
+            a.vy *= 0.7;
+            a.vx *= 0.7;
+            a.y += a.vy;
+            a.x += a.vx;
+        }
+        
+
+        console.log(angleDeg);
     }
 
     navigate_path(a, x_pos, y_pos)
     {
-        //a.vy += 0.08; 
-
+        
         if (a.x > x_pos && a.y < y_pos)
         {
-            a.x -= 0.25;
-            a.y += 0.25;
-            // a.vx -= 0.01;
-            //a.vy += 0.01;
+            a.x -= 0.5;
+            a.y += 0.5;
         }
 
         else if (a.x < x_pos && a.y < y_pos)
         {
-            a.x += 0.25;
-            a.y += 0.25;
-            //a.vx += 0.01;
-           // a.vy += 0.01;
+            a.x += 0.5;
+            a.y += 0.5;
         }
         
         else if (a.x == x_pos && a.y < y_pos)
         {
             a.x += 0;
-            a.y += 0.25;
+            a.y += 0.5;
         }
         
         else if (a.x == x_pos && a.y < y_pos)
         {
-            a.x += 0.25;
+            a.x += 0.5;
             a.y += 0;
         }
     }
