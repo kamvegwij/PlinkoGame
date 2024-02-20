@@ -1,3 +1,6 @@
+import {Physics} from './physics.js';
+
+
 //"NODES"
 let app;
 let slot_node;
@@ -21,6 +24,9 @@ let hit_grid_pin = false; //if collided with grid pins
 const array_buckets = [];
 const array_slot_text = [10, 5, 2, 1, 115, 1, 2, 5, 10];
 const array_grid_pins = [];
+
+// OBJECTS
+const physics = new Physics("none");
 
 // SETTER METHODS
 
@@ -164,10 +170,10 @@ function grid_pins_mechanics()
     let len = array_grid_pins.length;
     for (let x = 0; x < len; x++)
     {
-        if (isColliding(player_node, array_grid_pins[x]))
+        if (physics.is_colliding(player_node, array_grid_pins[x]))
         {
-            player_node.vy *= -0.9;
-            player_node.vx += 0.5;
+            player_node.vy *= -0.7;
+            player_node.vx += 0.2;
             //get the point where the objects collide and push the ball the opposite
             // A = arctan ( obj.y/obj.x )__> 
 
