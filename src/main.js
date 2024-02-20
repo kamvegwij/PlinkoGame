@@ -1,5 +1,5 @@
 import {Physics} from './physics.js';
-
+import {GameWorld} from './gameworld.js';
 
 //"NODES"
 let app;
@@ -22,8 +22,13 @@ let hit_grid_pin = false; //if collided with grid pins
 
 //DATA STRUCTURES
 const array_buckets = [];
-const array_slot_text = [10, 5, 2, 1, 115, 1, 2, 5, 10];
+const array_slot_text = [10, 5, 2, 1, 0, 1, 2, 5, 10];
 const array_grid_pins = [];
+const slots_x_pos = [];
+const slots_y_pos = [];
+
+const pin_x_pos = [];
+const pin_y_pos = [];
 
 // OBJECTS
 const physics = new Physics("none");
@@ -126,11 +131,16 @@ function create_game_world()
 
     for (let i = 0; i < 9; i++)
     {
-        // add the buckets to the game world:
         create_slots(80, 40, slot_pos, 500);
+
         set_bucket_text(slot_pos, array_slot_text[i]);
+        slots_x_pos.push(slot_node.x); //keep track of the position of the slots.
+        slots_y_pos.push(slot_node.y);
+
+        //console.log(slots_x_pos[i]);
         slot_pos += 100;
     }
+    
 
    // set_bucket_text(bucket_score_text);
 
@@ -162,6 +172,12 @@ function create_game_world()
     create_pins(40, 40, 200, 400);
     create_pins(40, 40, 100, 400);
     create_pins(40, 40, 900, 400);
+
+    for (let x = 0; x < array_grid_pins.length; x++)
+    {
+        pin_x_pos.push(array_grid_pins[x].x);
+        pin_y_pos.push(array_grid_pins[x].y); //keep track of the positions of the pins/pegs.
+    }
 }
 
 function grid_pins_mechanics()
@@ -172,11 +188,10 @@ function grid_pins_mechanics()
     {
         if (physics.is_colliding(player_node, array_grid_pins[x]))
         {
-            player_node.vy *= -0.7;
-            player_node.vx += 0.2;
+            physics.bounce_object(player_node, array_grid_pins[x]);
+            //physics.navigate_path(player_node, slots_x_pos[8], slots_y_pos[8]);
             //get the point where the objects collide and push the ball the opposite
             // A = arctan ( obj.y/obj.x )__> 
-
         }
     }
 }
@@ -229,11 +244,6 @@ window.onload = function()
     create_game_world();
     create_player(40, 40, app.view.width/2, 0);
     create_score_text_node(score_text);
-    
-    //drop_player(); 
-    grid_pins_mechanics();
-    buckets_mechanics();
-
     app.ticker.add(gameLoop);
 }
 
@@ -242,11 +252,9 @@ function gameLoop()
         drop_player();
         if (ball_dropped == true)
         {
-            player_node.x += player_node.vx;
-            player_node.y += player_node.vy;
-            player_node.vy += 0.4;      
-
+            physics.navigate_path(player_node, slots_x_pos[6], slots_y_pos[6]);
             grid_pins_mechanics();
+            buckets_mechanics();
         }
         
         score_text_node.text = player_score.toString();
@@ -258,7 +266,7 @@ function add_score_from_slot()
     let counter = 0;
     for (let x = 0; x < array_buckets.length; x++)
     {
-        if (isColliding(player_node, array_buckets[x]))
+        if (physics.is_colliding(player_node, array_buckets[x]))
         {
             player_score += array_slot_text[counter];
             _reset_player_pos()
@@ -267,26 +275,5 @@ function add_score_from_slot()
         else { counter++; }
         //check which slot the player has landed on
         
-    }
-}
-function isColliding(a, b)
-{
-    //returns a bool
-    let obj1 = a.getBounds(); let obj2 = b.getBounds();
-
-    let x_intercept = obj1.x + obj2.width > 
-    obj2.x && obj1.x < obj2.x + obj2.width;
-
-    let y_intercept = obj1.y + obj2.height > 
-    obj2.y && obj1.y < obj2.y + obj2.height;
-
-    if (x_intercept == true && y_intercept == true)
-    {
-        return true;
-    }
-
-    else
-    {
-        return false;
     }
 }

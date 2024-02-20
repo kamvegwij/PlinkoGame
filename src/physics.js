@@ -35,10 +35,29 @@ export class Physics
 
     bounce_object(a, b)
     {
-        //we let a be the player and b the object it collides with
-        if (is_colliding(a, b))
+        a.vy *= 0.01;
+        a.vx -= 0.01;
+    }
+
+    navigate_path(a, x_pos, y_pos)
+    {
+
+
+        a.x += a.vx;
+        a.y += a.vy;
+        a.vy += 0.08; 
+
+        if (a.x > x_pos && a.y < y_pos)
+            {
+                a.vx -= 0.01;
+                a.vy += 0.01;
+            }
+
+        else if (a.x < x_pos && a.y < y_pos)
         {
-            //lets get the exact point where the player has collided and send it the opposite way.
+            a.vx += 0.01;
+            a.vy += 0.01;
         }
+        
     }
 }
