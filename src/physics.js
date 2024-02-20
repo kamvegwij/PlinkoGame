@@ -3,7 +3,7 @@ export class Physics
     #tag = "none"; 
     #gravity = -9.8;
     #friction = 2;
-
+    #collider; // the object we're colliding with;
     constructor(gravity = -9.8, friction = 0.2)
     {
         this.#gravity = gravity;
@@ -13,6 +13,14 @@ export class Physics
     get_tag()
     {
         return this.#tag;
+    }
+    set_collider(b)
+    {
+        this.#collider = b;
+    }
+    get_collider()
+    {
+        return this.#collider;
     }
 
     is_colliding(a, b)
@@ -28,6 +36,7 @@ export class Physics
 
     if (x_intercept == true && y_intercept == true)
     {
+        this.set_collider(b);
         return true;
     }
 
@@ -43,44 +52,12 @@ export class Physics
 
         // angle in degrees
         var angleDeg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
-
-        a.y += a.vy;
-        a.x += a.vx;
-
-        a.vy += 0.2;
-        a.vx += 0.05;
-
-        if (angleDeg >= 0 && angleDeg < 90)
-        {
-            a.vy *= -0.7;
-            a.vx *= 0.7;
-            a.y += a.vy;
-            a.x += a.vx;
-        }
-        else if (angleDeg >= 90 && angleDeg < 180)
-        {
-            a.vy *= -2;
-            a.vx *= -0.7;
-            a.y += a.vy;
-            a.x += a.vx;
-        }
-        if (angleDeg >= 180 && angleDeg < 270)
-        {
-            a.vy *= 2;
-            a.vx *= -0.7;
-            a.y += a.vy;
-            a.x += a.vx;
-        }
-        if (angleDeg >= 270 && angleDeg < 360)
-        {
-            a.vy *= 0.7;
-            a.vx *= 0.7;
-            a.y += a.vy;
-            a.x += a.vx;
-        }
         
+        a.vy -= 0.01;
+        a.vy *= 0.2;
+        a.y += a.vy;
 
-        console.log(angleDeg);
+        //console.log(angleDeg);
     }
 
     navigate_path(a, x_pos, y_pos)

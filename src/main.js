@@ -16,6 +16,11 @@ let player_score = 100; //default score 100, deduct 10
 let SPEED = 1.5;
 let player_test_pos;
 let slot_test_pos;
+let temp;
+let temp_collider;
+let rand_Num;
+let rand_Limit;
+let high_val_count = 0; //count how many high value slots have been chosen
 
 //BOOLEAN
 let ball_dropped = false;
@@ -123,7 +128,7 @@ function set_bucket_text(pos_x, stemp)
     const bucket_text = new PIXI.Text(stemp.toString(), b_style);
     bucket_text.anchor.set(0.5);
     bucket_text.x = pos_x;
-    bucket_text.y = 500;
+    bucket_text.y = 520;
     app.stage.addChild(bucket_text);
 }
 
@@ -133,7 +138,7 @@ function create_game_world()
 
     for (let i = 0; i < 9; i++)
     {
-        create_slots(80, 40, slot_pos, 500);
+        create_slots(80, 40, slot_pos, 520);
 
         set_bucket_text(slot_pos, array_slot_text[i]);
         slots_x_pos.push(slot_node.x); //keep track of the position of the slots.
@@ -149,31 +154,31 @@ function create_game_world()
     create_drop_button();
     create_start_point(45, 45, app.view.width/2, 0); //STARTING POINT
     
-    create_pins(40, 40, 400, 100); //TODO: Algorithm to draw this grid
-    create_pins(40, 40, 500, 100);
-    create_pins(40, 40, 600, 100);
-    create_pins(40, 40, 400, 200);
-    create_pins(40, 40, 500, 200);
-    create_pins(40, 40, 600, 200);
-    create_pins(40, 40, 300, 200);
-    create_pins(40, 40, 700, 200);
+    create_pins(60, 60, 400, 100); //TODO: Algorithm to draw this grid
+    create_pins(60, 60, 500, 100);
+    create_pins(60, 60, 600, 100);
+    create_pins(60, 60, 420, 200);
+    create_pins(60, 60, 530, 200);
+    create_pins(60, 60, 630, 200);
+    create_pins(60, 60, 300, 200);
+    create_pins(60, 60, 720, 200);
 
-    create_pins(40, 40, 400, 300); //
-    create_pins(40, 40, 500, 300); //
-    create_pins(40, 40, 600, 300); //
-    create_pins(40, 40, 300, 300);
-    create_pins(40, 40, 700, 300);
-    create_pins(40, 40, 800, 300);
-    create_pins(40, 40, 200, 300);
-    create_pins(40, 40, 400, 400);
-    create_pins(40, 40, 500, 400);
-    create_pins(40, 40, 600, 400);
-    create_pins(40, 40, 300, 400);
-    create_pins(40, 40, 700, 400);
-    create_pins(40, 40, 800, 400);
-    create_pins(40, 40, 200, 400);
-    create_pins(40, 40, 100, 400);
-    create_pins(40, 40, 900, 400);
+    create_pins(60, 60, 400, 300); //
+    create_pins(60, 60, 500, 300); //
+    create_pins(60, 60, 600, 300); //
+    create_pins(60, 60, 300, 300);
+    create_pins(60, 60, 700, 300);
+    create_pins(60, 60, 800, 300);
+    create_pins(60, 60, 200, 300);
+    create_pins(60, 60, 400, 400);
+    create_pins(60, 60, 500, 400);
+    create_pins(60, 60, 600, 400);
+    create_pins(60, 60, 300, 400);
+    create_pins(60, 60, 700, 400);
+    create_pins(60, 60, 800, 400);
+    create_pins(60, 60, 200, 400);
+    create_pins(60, 60, 100, 400);
+    create_pins(60, 60, 900, 400);
 
     for (let x = 0; x < array_grid_pins.length; x++)
     {
@@ -190,12 +195,8 @@ function grid_pins_mechanics()
     {
         if (physics.is_colliding(player_node, array_grid_pins[x]))
         {
-            hit_grid_pin = true;
+           // hit_grid_pin = true;
             physics.bounce_object(player_node, array_grid_pins[x]);
-        }
-        else
-        {
-            hit_grid_pin = false;
         }
     }
 }
@@ -217,7 +218,21 @@ function drop_player()
 
     drop_button_node.on('pointerdown', function()
     {
-        ball_dropped = true
+        rand_Limit = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(0) + 1) + Math.ceil(2)); //randomise how many tries it will take to get a high value slot.
+        rand_Num = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0) + 1) + Math.ceil(0));
+        
+        if (rand_Num == 0 || rand_Num == 1 || rand_Num == 8 || rand_Num == 9)
+        {
+            high_val_count += 1; //increase the amount of times we get high value slots.
+        }
+
+        if (high_val_count >= 0)
+        {
+            ball_dropped = true
+        }
+        console.log(rand_Limit);
+        console.log(rand_Num);
+        
     });
 }
 
@@ -232,6 +247,12 @@ function _reset_player_pos()
     SPEED = 1.5;
     player_node.position.set(app.view.width/2, 25);
     ball_dropped = false;
+}
+
+function choose_slot()
+{
+    //make higher value slots less likely to be chosen
+    physics.navigate_path(player_node, slots_x_pos[rand_Num], slots_y_pos[rand_Num]);
 }
 
 window.onload = function()
@@ -258,17 +279,33 @@ window.onload = function()
     slot_test_pos = new PIXI.Text();
     slot_test_pos.position.set(100, 300);
     app.stage.addChild(slot_test_pos)*/
+
+    
+    /*temp = PIXI.Sprite.from("images/player_ball.png");
+    temp.anchor.set(0.5, 0.5);
+    temp.width = 50;
+    temp.height = 50;
+    temp.vy = 0;
+    temp.vx = 0;
+    temp.x = app.view.width/2 - 200;
+    temp.y = app.view.height - 200;
+    app.stage.addChild(temp);
+    */
+    drop_player();
 }
+
+
 
 function gameLoop()
     {
        // player_test_pos.text = player_node.x.toString() + ",  " + player_node.y.toString();
        // slot_test_pos.text = slots_x_pos[6].toString() + ",  " + slots_y_pos[6].toString();
        
-       drop_player();
+
+       
         if (ball_dropped == true)
         {
-            physics.navigate_path(player_node, slots_x_pos[2], slots_y_pos[2]);
+            choose_slot();
             grid_pins_mechanics();
             slots_mechanics();
         }
