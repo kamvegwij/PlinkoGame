@@ -26,7 +26,7 @@
 # Task 2:
 - [x] Apply full physics to simulate ball movement through the pegs
 - [x] Implement collision detection
-- [ ] Integrate predetermined path with new physics simulation 
+- [x] Integrate predetermined path with new physics simulation 
 
 # Task 3:
 - [ ] Modify the weighting of the landing areas and the calculation to ensure an RTP of 90%, where
@@ -34,7 +34,8 @@ the return to player is 90% of the points they spent over enough games. Theoreti
 games if the player spent 100 points they should get 90 back. This is where separating game logic
 and visual updates has value, because a good way to determine your RTP is to run millions of
 games to simulate play and determine if your calculations are accurate.
-- [ ] Apply additional game features such as sound, power ups, animations, etc.
+- [x] Apply additional game features such as sound, power ups, animations, etc.
+      - [x] Animated pins when ball collides with them. 
 
 # How to play
 - Clone the project and open in VS Code
