@@ -46,7 +46,6 @@ export class Physics
     }
     }
 
-
     bounce_object(a, b)
     {
         //get the point where the objects collide and push the ball the opposite
@@ -60,35 +59,46 @@ export class Physics
 
         let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance}; //normalise
 
-        let vRelativeVelocity = {x: a.vx - b.vx, y: a.vy - b.vy};
+        let vRelativeVelocity = {x: a.vx - 0, y: a.vy - 0};
 
-        let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
+        let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y ;
 
-       // a.vx -= (speed * vCollisionNorm.x);
-       // a.vy -= (speed * vCollisionNorm.y);
+        a.vx -= (speed * vCollisionNorm.x);
+        a.vy -= (speed * vCollisionNorm.y * 2);
 
-        //console.log(angleDeg);
+        a.y += a.vy;
+        a.x += a.vx;    
+        a.vy += 0.009;
+        a.vx += 0.09;
+
+        //console.log(vRelativeVelocity);
     }
 
-    navigate_path(a, x_pos, y_pos)
+    move(a, x_pos, y_pos)
     {
-        
+        /*if (a.y < 0)
+        {
+            a.vy *= 0.1;
+            a.y += a.vy;
+        }*/
+
         if (a.x > x_pos && a.y < y_pos)
         {
+
             a.x -= 0.5;
-            a.y += 0.5;
+            a.y += 0.6;
         }
 
         else if (a.x < x_pos && a.y < y_pos)
         {
             a.x += 0.5;
-            a.y += 0.5;
+            a.y += 0.6;
         }
         
         else if (a.x == x_pos && a.y < y_pos)
         {
             a.x += 0;
-            a.y += 0.5;
+            a.y += 0.6;
         }
         
         else if (a.x == x_pos && a.y < y_pos)
