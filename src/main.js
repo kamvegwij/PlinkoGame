@@ -207,9 +207,14 @@ function grid_pins_mechanics()
     {
         let temp_pin = array_grid_pins[x]
 
-        if (physics.is_colliding( player_node, temp_pin) && lucky_btn_pressed)
+        if (physics.is_colliding( player_node, temp_pin) && lucky_btn_pressed) //let physics guide the ball.
         {
             physics.bounce_object(player_node, temp_pin);
+        }
+        
+        else if (physics.is_colliding( player_node, temp_pin) && !lucky_btn_pressed)
+        {
+            physics.get_collider().scale.set(1,1);
         }
     }
 }
@@ -227,7 +232,7 @@ function slots_mechanics()
 function choose_slots()
 {
     //develop an algorithm to guide player passed the pins.
-    rand_Limit = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(0) + 1) + Math.ceil(3)); //how many tries to get high value slot
+    
     //if rand_Limit = 5 then the player has to drop the ball 5 times to have a chance at landing in the high value slots
     //if rand_Num = 8 or 0 then high value slots are chosen, but if the highest_val_count < rand_Limit then the game will redraw the slot number to get something lower.
         if (ball_dropped != true) //can only drop ball when its at the start point.
@@ -338,7 +343,8 @@ window.onload = function()
     create_player(40, 40, app.view.width/2 + 15, 0);
     create_score_text_node(score_text);
     app.ticker.add(gameLoop);
-
+    
+    rand_Limit = Math.floor(Math.random() * (Math.floor(10) - Math.ceil(0) + 1) + Math.ceil(2)); //how many tries to get high value slot
     drop_button_node.on('pointerdown', function()
     {
         lucky_btn_pressed = false;
