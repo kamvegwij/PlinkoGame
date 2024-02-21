@@ -12,8 +12,7 @@ let drop_button_node;
 
 //DATA VARIABLES
 let score_text = "0";
-let player_score = 16; //default score 100, deduct 10
-let SPEED = 1.5;
+let player_score = 100; //default score 100, deduct 10
 let game_over_text;
 
 let rand_Num;
@@ -22,8 +21,6 @@ let high_val_count = 0; //count how many high value slots have been chosen
 
 //BOOLEAN
 let ball_dropped = false;
-let hit_slot = false; //if collided with bucket
-let hit_grid_pin = false; //if collided with grid pins
 
 //DATA STRUCTURES
 const array_buckets = [];
@@ -214,7 +211,8 @@ function drop_player()
 {
     //develop an algorithm to guide player passed the pins.
     rand_Limit = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(0) + 1) + Math.ceil(3)); //how many tries to get high value slot
-
+    //if rand_Limit = 5 then the player has to drop the ball 5 times to have a chance at landing in the high value slots
+    //if rand_Num = 8 or 0 then high value slots are chosen, but if the highest_val_count < rand_Limit then the game will redraw the slot number to get something lower.
     drop_button_node.on('pointerdown', function()
     {
         if (ball_dropped != true) //can only drop ball when its at the start point.
@@ -244,7 +242,7 @@ function drop_player()
 
                     else
                     {   
-                        high_val_count += 1; //increase the amount of times we get high value slots.
+                        high_val_count += 1; //increase the count to compare against rand_Limit.
                         rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0));  
                     }           
                 }
@@ -293,7 +291,6 @@ function _reset_player_pos()
     } 
     
     //this function resets the player position to the starting point
-    SPEED = 1.5;
     player_node.position.set(app.view.width/2, 25);
     ball_dropped = false;
 }
@@ -316,8 +313,6 @@ window.onload = function()
 
     drop_player();
 }
-
-
 
 function gameLoop()
     {
