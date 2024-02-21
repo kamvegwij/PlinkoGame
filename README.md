@@ -34,3 +34,9 @@ games if the player spent 100 points they should get 90 back. This is where sepa
 and visual updates has value, because a good way to determine your RTP is to run millions of
 games to simulate play and determine if your calculations are accurate.
 - [ ] Apply additional game features such as sound, power ups, animations, etc.
+
+# How to play
+- Clone the project and open in VS Code
+- Ensure "Go Live" extension is installed
+- Click Go Live and the game will render in the browser
+- Click "Play" for simple predetermined slot selection and "Try My Luck" for physics simulated movement
