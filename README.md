@@ -1,4 +1,4 @@
-# PlinkoGame
+# Plinko
 
 ![Alt text](images/gameplay.png?raw=true "Gameplay")
 
