@@ -1,5 +1,6 @@
 # PlinkoGame
-- Slot machine like game
+
+![Alt text](images/gameplay.png?raw=true "Gameplay")
 
 # Technologies used
 - Javascript
