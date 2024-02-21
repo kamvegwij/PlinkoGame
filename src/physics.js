@@ -33,13 +33,13 @@ export class Physics
         if (x_intercept == true && y_intercept == true)
         {
             this.set_collider(b);
-            b.scale.set(0.9, 0.9);
+            b.scale.set(0.41, 0.41);
             return true;
         }
 
         else
         {
-            b.scale.set(0.8, 0.8);
+            b.scale.set(0.4, 0.4);
             return false;
         }
     }
@@ -57,11 +57,11 @@ export class Physics
             {
                 if (a.y <= b.y)
                 {
-                    a.y -= 0.5;
+                    a.y -= 0.6;
                 }
                 else
                 {
-                    a.y += 0.5;
+                    a.y += 0.6;
                 }
                // a.y -= 2;
                 //a.vy += 0.9;
@@ -71,11 +71,11 @@ export class Physics
             {
                 if (a.y <= b.y) //vertical movement
                 {
-                    a.y -= 0.5;
+                    a.y -= 0.6;
                 }
                 else
                 {
-                    a.y += 0.5;
+                    a.y += 0.6;
                 }          
                 //a.y -= 2;
                 //a.vy *= 0.9;

@@ -70,11 +70,12 @@ function create_score_text_node(t)
 function create_slots(w, h, app_w, app_h)
 {
     slot_node = PIXI.Sprite.from("images/collect_box.png");
-    slot_node.anchor.set(0.5);
-    slot_node.width = w;
-    slot_node.height = h;
+    slot_node.anchor.set(0.5, 0.5);
     slot_node.x = app_w;
     slot_node.y = app_h;
+    slot_node.width = w;
+    slot_node.height = h;
+
     array_buckets.push(slot_node);
 
     app.stage.addChild(slot_node);
@@ -99,7 +100,7 @@ function create_pins(w, h, app_w, app_h)
     grid_pin_node = PIXI.Sprite.from("images/pins.png");
 
     grid_pin_node.anchor.set(0.5, 0.5);
-    grid_pin_node.scale.set(0.8, 0.8);
+    grid_pin_node.scale.set(0.4, 0.4);
     grid_pin_node.x = app_w;
     grid_pin_node.y = app_h;
     array_grid_pins.push(grid_pin_node);
@@ -148,7 +149,7 @@ function create_game_world()
 
     for (let i = 0; i < 9; i++)
     {
-        create_slots(80, 40, slot_pos, 520);
+        create_slots(45, 45, slot_pos, 520);
 
         set_bucket_text(slot_pos, array_slot_text[i]);
         slots_x_pos.push(slot_node.x); //keep track of the position of the slots.
@@ -160,8 +161,8 @@ function create_game_world()
     create_start_point(45, 45, app.view.width/2, 0); //STARTING POINT
     
     create_pins(40, 40, 400, 100); //TODO: Algorithm to draw this grid
-    create_pins(40, 40, 500, 100);
-    create_pins(40, 40, 600, 100);
+    create_pins(40, 40, 510, 100);
+    create_pins(40, 40, 610, 100);
     create_pins(40, 40, 435, 200);
     create_pins(40, 40, 530, 200);
     create_pins(40, 40, 630, 200);
@@ -169,21 +170,20 @@ function create_game_world()
     create_pins(40, 40, 720, 200);
 
     create_pins(40, 40, 400, 300); 
-    create_pins(40, 40, 500, 300); 
-    create_pins(40, 40, 600, 300); 
+    create_pins(40, 40, 510, 300); 
+    create_pins(40, 40, 610, 300); 
     create_pins(40, 40, 300, 300);
-    create_pins(40, 40, 700, 300);
+    create_pins(40, 40, 710, 300);
     create_pins(40, 40, 800, 300);
     create_pins(40, 40, 200, 300);
-    create_pins(40, 40, 400, 400);
-    create_pins(40, 40, 500, 400);
-    create_pins(40, 40, 600, 400);
-    create_pins(40, 40, 310, 400);
-    create_pins(40, 40, 700, 400);
-    create_pins(40, 40, 800, 400);
-    create_pins(40, 40, 200, 400);
-    create_pins(40, 40, 100, 400);
-    create_pins(40, 40, 900, 400);
+    create_pins(40, 40, 450, 400);
+    create_pins(40, 40, 550, 400);
+    create_pins(40, 40, 660, 400);
+    create_pins(40, 40, 350, 400);
+    create_pins(40, 40, 760, 400);
+    create_pins(40, 40, 860, 400);
+    create_pins(40, 40, 240, 400);
+    create_pins(40, 40, 130, 400);
 
     for (let x = 0; x < array_grid_pins.length; x++)
     {
@@ -324,7 +324,7 @@ window.onload = function()
         {
             width: 1000,
             height: 800,
-            backgroundColor: 'gray'}
+            backgroundColor: 'steelblue'}
     );
     document.body.appendChild(app.view);
 
