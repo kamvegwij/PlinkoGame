@@ -2,9 +2,8 @@
 - Slot machine like game
 
 # Technologies used
-- Javascript (testing and final export)
-- Typescript (main codebase)
-- PixiJS (rendering the game in browser)
+- Javascript
+- PixiJS
   
 # Task 1:
 - [x] Import art assets to build the game world
