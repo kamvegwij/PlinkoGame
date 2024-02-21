@@ -167,10 +167,10 @@ function create_game_world()
     create_pins(40, 40, 400, 100); //TODO: Algorithm to draw this grid
     create_pins(40, 40, 500, 100);
     create_pins(40, 40, 600, 100);
-    create_pins(40, 40, 420, 200);
+    create_pins(40, 40, 435, 200);
     create_pins(40, 40, 530, 200);
     create_pins(40, 40, 630, 200);
-    create_pins(40, 40, 300, 200);
+    create_pins(40, 40, 320, 200);
     create_pins(40, 40, 720, 200);
 
     create_pins(40, 40, 400, 300); //
@@ -183,7 +183,7 @@ function create_game_world()
     create_pins(40, 40, 400, 400);
     create_pins(40, 40, 500, 400);
     create_pins(40, 40, 600, 400);
-    create_pins(40, 40, 300, 400);
+    create_pins(40, 40, 310, 400);
     create_pins(40, 40, 700, 400);
     create_pins(40, 40, 800, 400);
     create_pins(40, 40, 200, 400);
@@ -207,14 +207,9 @@ function grid_pins_mechanics()
     {
         let temp_pin = array_grid_pins[x]
 
-        if (physics.is_colliding( player_node, temp_pin) && lucky_btn_pressed) //let physics guide the ball.
+        if (physics.is_colliding( player_node, temp_pin)) //let physics guide the ball.
         {
             physics.bounce_object(player_node, temp_pin);
-        }
-        
-        else if (physics.is_colliding( player_node, temp_pin) && !lucky_btn_pressed)
-        {
-            physics.get_collider().scale.set(1,1);
         }
     }
 }
@@ -363,7 +358,15 @@ function gameLoop()
     {
         if (ball_dropped == true)
         {
-            physics.move(player_node, slots_x_pos[rand_Num], slots_y_pos[rand_Num]);
+            if (lucky_btn_pressed)
+            {
+                physics.move_independent(player_node, slots_x_pos[rand_Num], slots_y_pos[rand_Num]); // landing area determined by physics.
+            }
+            else
+            {
+                physics.move(player_node, slots_x_pos[rand_Num], slots_y_pos[rand_Num]); // this is the guided path
+            }
+
             grid_pins_mechanics();
             slots_mechanics();
         }

@@ -54,11 +54,13 @@ export class Physics
             if (a.x <= b.x)
             {
                // a.y -= 2;
+                a.vy *= 0.1;
                 a.x -= 2;
             }
             else
             {
                 //a.y -= 2;
+                a.vy *= 0.1;
                 a.x += 2;
             }
         }
@@ -92,5 +94,11 @@ export class Physics
             a.x += 0.5;
             a.y += 0;
         } 
+    }
+
+    move_independent(a, x_pos, y_pos) //completely relies on the physics.
+    {
+        a.y += a.vy;
+        a.vy += 0.009;
     }
 }
