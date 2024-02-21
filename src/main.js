@@ -1,5 +1,6 @@
 import {Physics} from './physics.js';
 import {GameWorld} from './gameworld.js';
+import { MusicController } from './musiccontroller.js';
 
 //"NODES"
 let app;
@@ -98,8 +99,7 @@ function create_pins(w, h, app_w, app_h)
     grid_pin_node = PIXI.Sprite.from("images/pins.png");
 
     grid_pin_node.anchor.set(0.5, 0.5);
-    grid_pin_node.width = w;
-    grid_pin_node.height = h;
+    grid_pin_node.scale.set(0.8, 0.8);
     grid_pin_node.x = app_w;
     grid_pin_node.y = app_h;
     array_grid_pins.push(grid_pin_node);

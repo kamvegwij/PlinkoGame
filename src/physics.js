@@ -33,11 +33,13 @@ export class Physics
         if (x_intercept == true && y_intercept == true)
         {
             this.set_collider(b);
+            b.scale.set(1, 1);
             return true;
         }
 
         else
         {
+            b.scale.set(0.8, 0.8);
             return false;
         }
     }
@@ -51,16 +53,32 @@ export class Physics
         if (distance <= ((a.width + b.width) * (a.height + b.height)))
 
         { //they're overlapping or colliding.
-            if (a.x <= b.x)
+            if (a.x <= b.x) 
             {
+                if (a.y <= b.y)
+                {
+                    a.y -= 0.5;
+                }
+                else
+                {
+                    a.y += 0.5;
+                }
                // a.y -= 2;
-                a.vy *= 0.9;
+                //a.vy += 0.9;
                 a.x -= 2;
             }
             else
             {
+                if (a.y <= b.y) //vertical movement
+                {
+                    a.y -= 0.5;
+                }
+                else
+                {
+                    a.y += 0.5;
+                }          
                 //a.y -= 2;
-                a.vy *= 0.9;
+                //a.vy *= 0.9;
                 a.x += 2;
             }
         }
@@ -74,19 +92,19 @@ export class Physics
         {
 
             a.x -= 0.5;
-            a.y += 0.6;
+            a.y += 0.5;
         }
 
         else if (a.x < x_pos && a.y < y_pos)
         {
             a.x += 0.5;
-            a.y += 0.6;
+            a.y += 0.5;
         }
         
         else if (a.x == x_pos && a.y < y_pos)
         {
             a.x += 0;
-            a.y += 0.6;
+            a.y += 0.5;
         }
         
         else if (a.x == x_pos && a.y < y_pos)
@@ -98,7 +116,7 @@ export class Physics
 
     move_independent(a, x_pos, y_pos) //completely relies on the physics.
     {
-        a.y += a.vy;
-        a.vy += 0.009;
+        a.y += 0.5;
+       // a.vy += 0.009;
     }
 }
