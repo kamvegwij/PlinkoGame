@@ -4,8 +4,10 @@
 # Technologies used
 - Javascript
 - PixiJS
-  
-# Task 1:
+# Physics System Issues:
+- [ ] Ball must bounce off the pegs, collision detection already works.
+- [ ] 
+ # Task 1:
 - [x] Import art assets to build the game world
 - [x] Apply physics to the player ball (collisions and collision tracking with other objects)
 - [x] Apply physics to the rest of the world objects (pins and score buckets)
