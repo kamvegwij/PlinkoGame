@@ -34,8 +34,7 @@ the return to player is 90% of the points they spent over enough games. Theoreti
 games if the player spent 100 points they should get 90 back. This is where separating game logic
 and visual updates has value, because a good way to determine your RTP is to run millions of
 games to simulate play and determine if your calculations are accurate.
-- [x] Apply additional game features such as sound, power ups, animations, etc.
-      - Animated pins when ball collides with them. 
+- [x] Apply additional game features such as sound, power ups, animations, etc. (Animated pins when ball collides with them) 
 
 # How to play
 - Clone the project and open in VS Code
