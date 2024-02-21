@@ -7,6 +7,7 @@
 - PixiJS
 # Physics System Issues:
 - [x] Ball must bounce off the pegs, collision detection already works.
+- [ ] Smooth out the bouncing mechanic so that the ball simulates a real life ball, bouncing mustn't be dynamic
 - [ ] Smooth ball movement
 - [ ] Gravity and Friction mechanics
 - [ ] Speed and Acceleration mechanics
