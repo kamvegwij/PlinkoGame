@@ -6,8 +6,11 @@
 - Javascript
 - PixiJS
 # Physics System Issues:
-- [ ] Ball must bounce off the pegs, collision detection already works.
-- [ ] Smooth ball movement 
+- [x] Ball must bounce off the pegs, collision detection already works.
+- [ ] Smooth ball movement
+- [ ] Gravity and Friction mechanics
+- [ ] Speed and Acceleration mechanics
+      
  # Task 1:
 - [x] Import art assets to build the game world
 - [x] Apply physics to the player ball (collisions and collision tracking with other objects)
@@ -17,10 +20,10 @@
     - [x] Increase score for landing in bucket
     - [x] Algorithm to guide player to pre-determined slot.
     - [x] Algorithm to make high value slots less likely to be chosen
-    - [ ] Player ball has to avoid pins/pegs as it navigates
+    - [x] Player ball has to avoid pins/pegs as it navigates
  
 # Task 2:
-- [ ] Apply full physics to simulate ball movement through the pegs
+- [x] Apply full physics to simulate ball movement through the pegs
 - [x] Implement collision detection
 - [ ] Integrate predetermined path with new physics simulation 
 
