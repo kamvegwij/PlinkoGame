@@ -33,7 +33,7 @@ export class Physics
         if (x_intercept == true && y_intercept == true)
         {
             this.set_collider(b);
-            b.scale.set(1, 1);
+            b.scale.set(0.9, 0.9);
             return true;
         }
 
