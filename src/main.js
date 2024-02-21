@@ -239,13 +239,14 @@ function drop_player()
                         high_val_count = 0; //reset
                         state = true
                     }
+                    
                     else
                     {   
                         high_val_count += 1; //increase the amount of times we get high value slots.
                         rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0));  
-                    }
-                        
+                    }           
                 }
+
                 else
                 {
                     state = true;
@@ -255,8 +256,7 @@ function drop_player()
             else
             {
                 rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0));
-            }
-            
+            }            
         }
 
         ball_dropped = true
@@ -264,7 +264,6 @@ function drop_player()
         console.log("Limit: ", rand_Limit);
         console.log("Slot number: ", rand_Num);
         console.log("Count: ", high_val_count);
-        console.log("Slots count: ", array_buckets.length);
     });
 }
 
@@ -279,12 +278,6 @@ function _reset_player_pos()
     SPEED = 1.5;
     player_node.position.set(app.view.width/2, 25);
     ball_dropped = false;
-}
-
-function choose_slot()
-{
-    //make higher value slots less likely to be chosen
-    physics.navigate_path(player_node, slots_x_pos[rand_Num], slots_y_pos[rand_Num]);
 }
 
 window.onload = function()
@@ -312,7 +305,7 @@ function gameLoop()
     {
         if (ball_dropped == true)
         {
-            choose_slot();
+            physics.navigate_path(player_node, slots_x_pos[rand_Num], slots_y_pos[rand_Num]);
             grid_pins_mechanics();
             slots_mechanics();
         }

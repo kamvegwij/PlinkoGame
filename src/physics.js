@@ -53,9 +53,13 @@ export class Physics
         // angle in degrees
         var angleDeg = Math.atan2(b.y - a.y, b.x - a.x) * 180 / Math.PI;
         
-        a.vy -= 0.01;
-        a.vy *= 0.2;
-        a.y += a.vy;
+        let vCollision = {x: b.x - a.x, y: b.y - a.y};
+        let distance = Math.sqrt((b.x-a.x)*(b.x-a.x) + (b.y-a.y)*(b.y-a.y));
+        let vCollisionNorm = {x: vCollision.x / distance, y: vCollision.y / distance}; //normalise
+        let vRelativeVelocity = {x: a.vx - b.vx, y: a.vy - b.vy};
+        let speed = vRelativeVelocity.x * vCollisionNorm.x + vRelativeVelocity.y * vCollisionNorm.y;
+        a.vx -= (speed * vCollisionNorm.x);
+        a.vy -= (speed * vCollisionNorm.y);
 
         //console.log(angleDeg);
     }
