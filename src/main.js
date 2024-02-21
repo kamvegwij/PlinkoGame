@@ -215,39 +215,46 @@ function slots_mechanics()
 function drop_player()
 {
     //develop an algorithm to guide player passed the pins.
+    rand_Limit = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(0) + 1) + Math.ceil(3)); //how many tries to get high value slot
 
     drop_button_node.on('pointerdown', function()
     {
         let state = false;
-        rand_Limit = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(0) + 1) + Math.ceil(3)); //randomise how many tries it will take to get a high value slot.
-        rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0)); //randomises the different slots.
-
         
+        rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(5)); //randomises the different slots.
 
         while (state == false)
         {
             // this algorithm reduces the probability of getting a high value slot
-            
-            if (rand_Num == 0 || rand_Num == 1 || rand_Num == 7 || rand_Num == 8) //these represent the high value slots
+            if (rand_Num >= 0 && rand_Num < array_buckets.length)
             {
-                let temp = rand_Num;
 
-                if (high_val_count >= 2)
+                if (rand_Num == 0 || rand_Num == 1 || rand_Num == 7 || rand_Num == 8) //these represent the high value slots
                 {
-                    rand_Num = temp; // keep that high value slot as the player has a chance to score big now.
-                    high_val_count = 0; //reset
-                    state = true
+                    let temp = rand_Num;
+
+                    if (high_val_count >= rand_Limit)
+                    {
+                        rand_Num = temp; // keep that high value slot as the player has a chance to score big now.
+                        high_val_count = 0; //reset
+                        state = true
+                    }
+                    else
+                    {   
+                        high_val_count += 1; //increase the amount of times we get high value slots.
+                        rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0));  
+                    }
+                        
                 }
                 else
-                {   
-                    high_val_count += 1; //increase the amount of times we get high value slots.
-                    rand_Num = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0) + 1) + Math.ceil(0));  
+                {
+                    state = true;
                 }
-                       
             }
+
             else
             {
-                state = true;
+                rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0));
             }
             
         }
@@ -257,7 +264,7 @@ function drop_player()
         console.log("Limit: ", rand_Limit);
         console.log("Slot number: ", rand_Num);
         console.log("Count: ", high_val_count);
-        
+        console.log("Slots count: ", array_buckets.length);
     });
 }
 
