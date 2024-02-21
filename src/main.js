@@ -12,12 +12,10 @@ let drop_button_node;
 
 //DATA VARIABLES
 let score_text = "0";
-let player_score = 100; //default score 100, deduct 10
+let player_score = 16; //default score 100, deduct 10
 let SPEED = 1.5;
-let player_test_pos;
-let slot_test_pos;
-let temp;
-let temp_collider;
+let game_over_text;
+
 let rand_Num;
 let rand_Limit;
 let high_val_count = 0; //count how many high value slots have been chosen
@@ -219,6 +217,10 @@ function drop_player()
 
     drop_button_node.on('pointerdown', function()
     {
+        if (ball_dropped != true) //can only drop ball when its at the start point.
+        {
+
+        
         let state = false;
         
         rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(5)); //randomises the different slots.
@@ -239,7 +241,7 @@ function drop_player()
                         high_val_count = 0; //reset
                         state = true
                     }
-                    
+
                     else
                     {   
                         high_val_count += 1; //increase the amount of times we get high value slots.
@@ -258,8 +260,24 @@ function drop_player()
                 rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0));
             }            
         }
+        
+        if (player_score >= 10)
+        {
+            ball_dropped = true
+        }
+        else
+        {
+            const text_style = new PIXI.TextStyle({
+                fontSize: 30
+            });
 
-        ball_dropped = true
+            game_over_text = new PIXI.Text("Not enough points to play, restart the game!", text_style);
+            game_over_text.anchor.set(0.5, 0.5);
+            game_over_text.x = app.view.width/2;
+            game_over_text.y = 600;
+            app.stage.addChild(game_over_text);
+        }
+    }
         
         console.log("Limit: ", rand_Limit);
         console.log("Slot number: ", rand_Num);
@@ -305,6 +323,9 @@ function gameLoop()
     {
         if (ball_dropped == true)
         {
+           // player_node.vy += 0.01;
+            //player_node.y  += player_node.vy;
+
             physics.navigate_path(player_node, slots_x_pos[rand_Num], slots_y_pos[rand_Num]);
             grid_pins_mechanics();
             slots_mechanics();
