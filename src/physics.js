@@ -54,13 +54,13 @@ export class Physics
             if (a.x <= b.x)
             {
                // a.y -= 2;
-                a.vy *= 0.1;
+                a.vy *= 0.9;
                 a.x -= 2;
             }
             else
             {
                 //a.y -= 2;
-                a.vy *= 0.1;
+                a.vy *= 0.9;
                 a.x += 2;
             }
         }

@@ -153,13 +153,8 @@ function create_game_world()
         set_bucket_text(slot_pos, array_slot_text[i]);
         slots_x_pos.push(slot_node.x); //keep track of the position of the slots.
         slots_y_pos.push(slot_node.y);
-
-        //console.log(slots_x_pos[i]);
         slot_pos += 100;
     }
-    
-
-   // set_bucket_text(bucket_score_text);
 
     create_drop_button();
     create_start_point(45, 45, app.view.width/2, 0); //STARTING POINT
@@ -173,9 +168,9 @@ function create_game_world()
     create_pins(40, 40, 320, 200);
     create_pins(40, 40, 720, 200);
 
-    create_pins(40, 40, 400, 300); //
-    create_pins(40, 40, 500, 300); //
-    create_pins(40, 40, 600, 300); //
+    create_pins(40, 40, 400, 300); 
+    create_pins(40, 40, 500, 300); 
+    create_pins(40, 40, 600, 300); 
     create_pins(40, 40, 300, 300);
     create_pins(40, 40, 700, 300);
     create_pins(40, 40, 800, 300);
