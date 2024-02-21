@@ -6,7 +6,7 @@
 - PixiJS
 # Physics System Issues:
 - [ ] Ball must bounce off the pegs, collision detection already works.
-- [ ] 
+- [ ] Smooth ball movement 
  # Task 1:
 - [x] Import art assets to build the game world
 - [x] Apply physics to the player ball (collisions and collision tracking with other objects)
