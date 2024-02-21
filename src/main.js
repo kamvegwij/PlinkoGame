@@ -219,27 +219,37 @@ function drop_player()
     drop_button_node.on('pointerdown', function()
     {
         let state = false;
-        rand_Limit = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(0) + 1) + Math.ceil(2)); //randomise how many tries it will take to get a high value slot.
+        rand_Limit = Math.floor(Math.random() * (Math.floor(5) - Math.ceil(0) + 1) + Math.ceil(3)); //randomise how many tries it will take to get a high value slot.
         rand_Num = Math.floor(Math.random() * (Math.floor(8) - Math.ceil(0) + 1) + Math.ceil(0)); //randomises the different slots.
+
+        
 
         while (state == false)
         {
             // this algorithm reduces the probability of getting a high value slot
             
-            if (rand_Num == 0 || rand_Num == 1 || rand_Num == 7 || rand_Num == 8)
+            if (rand_Num == 0 || rand_Num == 1 || rand_Num == 7 || rand_Num == 8) //these represent the high value slots
             {
-                if (high_val_count >= rand_Limit)
+                let temp = rand_Num;
+
+                if (high_val_count >= 2)
                 {
+                    rand_Num = temp; // keep that high value slot as the player has a chance to score big now.
                     high_val_count = 0; //reset
                     state = true
                 }
-                high_val_count += 1; //increase the amount of times we get high value slots.
-                rand_Num = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0) + 1) + Math.ceil(0));         
+                else
+                {   
+                    high_val_count += 1; //increase the amount of times we get high value slots.
+                    rand_Num = Math.floor(Math.random() * (Math.floor(9) - Math.ceil(0) + 1) + Math.ceil(0));  
+                }
+                       
             }
             else
             {
                 state = true;
             }
+            
         }
 
         ball_dropped = true
