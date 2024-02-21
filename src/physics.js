@@ -117,6 +117,5 @@ export class Physics
     move_independent(a, x_pos, y_pos) //completely relies on the physics.
     {
         a.y += 0.5;
-       // a.vy += 0.009;
     }
 }
