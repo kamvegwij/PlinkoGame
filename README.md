@@ -13,6 +13,7 @@
     - [x] Deduct 10 from original 100 player points for dropping
     - [x] Increase score for landing in bucket
     - [x] Algorithm to guide player to pre-determined slot.
+    - [x] Algorithm to make high value slots less likely to be chosen
     - [ ] Player ball has to avoid pins/pegs as it navigates
  
 # Task 2:
