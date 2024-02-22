@@ -45,5 +45,6 @@ games to simulate play and determine if your calculations are accurate.
 # Developer Tips
 - Open inspect page and open the console to view which slots the ball is moving towards when clicking "Play" button
 - This button guides the ball to a predetermined slot which is randomly selected
+- This slot number chosen is index [0,....x] so slot number 0 = the first slot on the left
 - The "limit" value represents the cap for high value slots selected. If "count" < "limit" then they cannot land on a high value slot
 - Once "count" > "limit" then the player has a chance to get a high value slot, then this resets and the limit is randomly selected again.
