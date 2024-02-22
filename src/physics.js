@@ -63,8 +63,6 @@ export class Physics
                 {
                     a.y += 0.6;
                 }
-               // a.y -= 2;
-                //a.vy += 0.9;
                 a.x -= 2;
             }
             else
@@ -77,8 +75,6 @@ export class Physics
                 {
                     a.y += 0.6;
                 }          
-                //a.y -= 2;
-                //a.vy *= 0.9;
                 a.x += 2;
             }
         }
