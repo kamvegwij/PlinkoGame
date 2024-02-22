@@ -41,3 +41,9 @@ games to simulate play and determine if your calculations are accurate.
 - Ensure "Go Live" extension is installed
 - Click Go Live and the game will render in the browser
 - Click "Play" for simple predetermined slot selection and "Try My Luck" for physics simulated movement
+- 
+# Developer Tips
+- Open inspect page and open the console to view which slots the ball is moving towards when clicking "Play" button
+- This button guides the ball to a predetermined slot which is randomly selected
+- The "limit" value represents the cap for high value slots selected. If "count" < "limit" then they cannot land on a high value slot
+- Once "count" > "limit" then the player has a chance to get a high value slot, then this resets and the limit is randomly selected again.
